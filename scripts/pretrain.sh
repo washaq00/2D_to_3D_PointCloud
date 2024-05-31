@@ -1,0 +1,1 @@
+python3 pretrain.py --group=0 --model=orig-pre --arch=original --lr=5e-3 --toIt=200000
