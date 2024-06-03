@@ -54,7 +54,7 @@ def set(training):
 							   [0,-opt.outH,0,opt.outH/2],
 							   [0,0,-1,0],
 							   [0,0, 0,1]],dtype=np.float32)
-	opt.fuseTrans = np.load("/content/data/trans_fuse{0}.npy".format(opt.outViewN), allow_pickle=True)
+	opt.fuseTrans = np.load("data/trans_fuse{0}.npy".format(opt.outViewN), allow_pickle=True)
 
 	print("({0}) {1}".format(
 		util.toGreen("{0}".format(opt.group)),
