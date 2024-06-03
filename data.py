@@ -11,7 +11,7 @@ class Loader():
 		self.loadNovel = loadNovel
 		self.loadFixedOut = loadFixedOut
 		self.loadTest = loadTest
-		listFile = "/content/data/{0}_{1}.list".format(opt.category,"test" if loadTest else "train")
+		listFile = "data/{0}_{1}.list".format(opt.category,"test" if loadTest else "train")
 		self.CADs = []
 		with open(listFile) as file:
 			for line in file:
@@ -35,9 +35,9 @@ class Loader():
 		# load data
 		for c in range(chunkSize):
 			CAD = self.CADs[idx[c]]
-			data["image_in"][c] = np.load("/content/data/{0}_inputRGB/{1}.npy".format(opt.category,CAD))/255.0
+			data["image_in"][c] = np.load("data/{0}_inputRGB/{1}.npy".format(opt.category,CAD))/255.0
 			if self.loadNovel:
-				rawData = scipy.io.loadmat("/content/data/{0}_depth/{1}.mat".format(opt.category,CAD))
+				rawData = scipy.io.loadmat("data/{0}_depth/{1}.mat".format(opt.category,CAD))
 				depth = rawData["Z"]
 				trans = rawData["trans"]
 				mask = depth!=0
@@ -47,7 +47,7 @@ class Loader():
 				data["mask"][c] = mask
 				data["trans"][c] = trans
 			if self.loadFixedOut:
-				rawData_fixed = scipy.io.loadmat("/content/data/{0}_depth_fixed{1}/{2}.mat".format(opt.category,opt.outViewN,CAD))
+				rawData_fixed = scipy.io.loadmat("data/{0}_depth_fixed{1}/{2}.mat".format(opt.category,opt.outViewN,CAD))
 				depth_fixed = rawData_fixed["Z"]
 				mask_fixed = depth_fixed!=0
 				depth_fixed[~mask_fixed] = opt.renderDepth
