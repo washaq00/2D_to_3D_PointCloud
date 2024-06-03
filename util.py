@@ -44,11 +44,11 @@ def imageSummary(opt,tag,image,H,W):
 
 # restore model
 def restoreModelFromIt(opt,sess,saver,it):
-	saver.restore(sess,"/content/drive/MyDrive/attprj1/3D-point-cloud-generation/models_{0}/{1}_it{2}.ckpt".format(opt.group,opt.model,it))
+	saver.restore(sess,"models_{0}/{1}_it{2}.ckpt".format(opt.group,opt.model,it))
 # restore model
 def restoreModel(opt,sess,saver):
-	saver.restore(sess,"/content/drive/MyDrive/attprj1/3D-point-cloud-generation/models_{0}/{1}.ckpt".format(opt.group,opt.load))
+	saver.restore(sess,"models_{0}/{1}.ckpt".format(opt.group,opt.load))
 # save model
 def saveModel(opt,sess,saver,it):
-	saver.save(sess,"/content/drive/MyDrive/attprj1/3D-point-cloud-generation/models_{0}/{1}_it{2}.ckpt".format(opt.group,opt.model,it))
+	saver.save(sess,"models_{0}/{1}_it{2}.ckpt".format(opt.group,opt.model,it))
 
