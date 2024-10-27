@@ -9,56 +9,43 @@ The dataset (8.8GB) can be downloaded by running the command
 ```
 wget https://cmu.box.com/shared/static/s4lkm5ej7sh4px72vesr17b1gxam4hgy.gz
 ```
+After downloading, run `tar -zxf s4lkm5ej7sh4px72vesr17b1gxam4hgy.gz` under the main directory of the repository. The files will be extracted to the `data` directory.  
+
 This file includes:
 - Train/test split files (from [Perspective Transformer Nets](https://github.com/xcyan/nips16_PTN))
 - Input RGB images (from [Perspective Transformer Nets](https://github.com/xcyan/nips16_PTN))
 - Pre-rendered depth images for training
 - Ground-truth point clouds of the test split (densified to 100K points)
 
-After downloading, run `tar -zxf s4lkm5ej7sh4px72vesr17b1gxam4hgy.gz` under the main directory. The files will be extracted to the `data` directory.  
-(Please also cite the relevant papers if you plan to use this dataset package.)
 
 ### Running the code  
-The following scripts gives examples for running the code.
-- Pretraining the network: `scripts/run-pretrain.sh`  
-- Fine-tuning with joint 2D optimization: `scripts/run-finetune.sh`  
-- Evaluating on the test set: `scripts/run-evaluate.sh`  
-- Computing the error metrics: `scripts/run-compute-error.sh` 
+There are 4 scripts prepared:.
+- Pretraining stage: `scripts/pretrain.sh`
+    with flags:
+      --model - define the name for the model to be saved
+      --lr - you can adjust the learning rate
+      --toIt - define the number of iterations 
+- Training with joint 2D optimization: `scripts/train.sh`
+   with flags:
+      --model - define the name for the model to be saved
+      --load - define the name of the checkpoint from the pretraining stage
+      --lr - you can adjust the learning rate
+      --fromIt and --toIt are not meant to be changed
+- Evaluating on the test set: `scripts/evaluate.sh` - probably the most important part of this code, as you can base on the the results/checkpoints from the training stage and it will affect on final calculations. We suggest to monitor results of training by uploading summary files to the collab and extract them on the diagrams. Find the optimized checkpoint and define it in the script. In most cases neural networks has the best perfomance in the first 4000 epochs. Evaulated point clouds might be visualised with matlab libraries.
+  with flag:
+    --load - model/checkpoint
+- Computing the error metrics: `scripts/compute.sh` - script comptues Earth Mover's distance from ground truth model to the predicted cloud and in the opposite direction.
+
+The list of optional arguments can be found by executing `python3 train.py --help`. The default training settings in this released code is slightly different from the paper but optimizes the networks better.
+  
+
+Run all of them one by one with a command: `scripts/run-pretrain.sh && scripts/run-finetune.sh && scripts/run-evaluate.sh && scripts/run-compute-error.sh` 
 
 Checkpoints are stored in `models_${GROUP}`, summaries are stored in `summary_${GROUP}`, and evaluated point clouds are stored in `results_${GROUP}`.  
-The list of optional arguments can be found by executing `python3 train.py --help`. The default training settings in this released code is slightly different from the paper but optimizes the networks better.  
-We provide two different network architectures: (1) originally from the paper (2) deeper with residual blocks. Reference performances on the test set is as follows (note that different runs will result in slightly different performances):
 
-|          | pred→GT | GT→pred |
-|:--------:|:-------:|:-------:|
-| original |  1.7342 |  1.8371 |
-|  ResNet  |  1.6723 |  1.8169 |
 
---------------------------------------
 
-## Rendering ground-truth depth images
-We provide the code to render depth images for supervision.  
 
-### Prerequisites  
-This code requires the following:
-- [Blender](https://www.blender.org/) as the rendering engine. This code was developed with Blender 2.78.  
-  After installation, please make sure the command `blender` is callable (use `which blender` to check installation).
-- The [OpenEXR Python binding](http://www.excamera.com/sphinx/articles-openexr.html) for .exr to .mat file conversion.  
 
-### Dataset  
-The raw ShapeNet dataset can be downloaded [here](https://www.shapenet.org/).  
-This rendering code was developed to use ShapeNetCore v2. (The provided depth images were rendered from ShapeNetCore v1.)
 
-### Running the code  
-Under `render`, run `./run.sh 03001627 8` to render depth images for fixed and arbitrary viewpoints, and convert them to .mat files. This will convert all objects in the ShapeNet chair category (03001627) with 8 fixed viewpoints.  
-The rendered files will be stored in the `output` directory.
 
---------------------------------------
-
-## Creating densified point clouds of CAD models for evaluation
-We also provide the code to densify the vertices of CAD models to a specified number. This code can be run independently; only the ShapeNet dataset is required.
-It repeats the process of adding a vertex to the center of the longest edge of the triangular mesh and subsequently re-triangulating the mesh. This will create (generally) uniformly densified CAD models.  
-<p align="center"><img src="densify/example.png" width=400></p>
-
-### Running the code  
-Under `densify`, run `./run.sh 03001627` to run densification. The densified CAD models will be stored in the `output` directory.
