@@ -29,10 +29,9 @@ with tf.device("/gpu:3"):
 	maskGT = tf.placeholder(tf.float32,shape=[opt.batchSize,opt.novelN,opt.H,opt.W,1])
 	PH = [inputImage,renderTrans,depthGT,maskGT]
 	# ------ build encoder-decoder ------
-	encoder = graph.encoder if opt.arch=="original" else \
-			  graph.encoder_resnet if opt.arch=="resnet" else None
-	decoder = graph.decoder if opt.arch=="original" else \
-			  graph.decoder_resnet if opt.arch=="resnet" else None
+	encoder = graph.encoder 	  
+	decoder = graph.decoder 
+			 
 	latent = encoder(opt,inputImage)
 	XYZ,maskLogit,d2 = decoder(opt,latent) # [B,H,W,3V],[B,H,W,V]
 	mask = tf.to_float(maskLogit>0)
