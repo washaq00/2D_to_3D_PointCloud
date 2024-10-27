@@ -32,8 +32,7 @@ There are 4 scripts prepared:
 - Evaluating on the test set: `scripts/evaluate.sh`.
   
 Probably the most important part of this code, as you can base on the the results/checkpoints from the training stage and it will affect on final calculations. We suggest to monitor results of training by uploading summary files to the collab and extract them on the diagrams. Find the optimized checkpoint and define it in the script. In most cases neural networks has the best perfomance in the first 4000 epochs. Evaulated point clouds might be visualised with matlab libraries.
-  with flag:
-    --load - model/checkpoint
+  - --load - model/checkpoint
 - Computing the error metrics: `scripts/compute.sh` - script comptues Earth Mover's distance from ground truth model to the predicted cloud and in the opposite direction.
 
 The list of optional arguments can be found by executing `python3 train.py --help`. The default training settings in this released code is slightly different from the paper but optimizes the networks better.
