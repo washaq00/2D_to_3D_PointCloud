@@ -39,7 +39,7 @@ Probably the most important part of this code, as you can base on the the result
 The list of optional arguments can be found by executing `python3 train.py --help`. The default training settings in this released code is slightly different from the paper but optimizes the networks better.
   
 
-Run all of them one by one with a command: `scripts/run-pretrain.sh && scripts/run-finetune.sh && scripts/run-evaluate.sh && scripts/run-compute-error.sh` 
+Run all of them one by one with a command: `scripts/pretrain.sh && scripts/finetune.sh && scripts/evaluate.sh && scripts/compute.sh` 
 
 Checkpoints are stored in `models_${GROUP}`, summaries are stored in `summary_${GROUP}`, and evaluated point clouds are stored in `results_${GROUP}`.  
 
