@@ -1,1 +1,1 @@
-python3 evaluate.py --group=0 --load=orig-ft_it100000
+python3 evaluate.py --load=orig-ft_it100000
