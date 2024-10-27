@@ -29,7 +29,7 @@ There are 4 scripts prepared:
   - --load - define the name of the checkpoint from the pretraining stage
   - --lr - you can adjust the learning rate
   - --fromIt and --toIt are not meant to be changed
-- Evaluating on the test set: `scripts/evaluate.sh`.
+- Evaluating on the test set: `scripts/evaluate.sh`
   
 Probably the most important part of this code, as you can base on the the results/checkpoints from the training stage and it will affect on final calculations. We suggest to monitor results of training by uploading summary files to the collab and extract them on the diagrams. Find the optimized checkpoint and define it in the script. In most cases neural networks has the best perfomance in the first 4000 epochs. Evaulated point clouds might be visualised with matlab libraries.
   - --load - model/checkpoint
