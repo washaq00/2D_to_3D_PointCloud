@@ -16,7 +16,7 @@ print(util.toMagenta("setting configurations..."))
 opt = options.set(training=True)
 
 # create directories for model output
-util.mkdir("models_{0}".format(opt.group))
+util.mkdir("models_{0}".format(0))
 
 print(util.toMagenta("building graph..."))
 tf.get_default_graph()
@@ -75,7 +75,7 @@ dataloader.loadChunk(opt)
 
 # prepare model saver/summary writer
 saver = tf.train.Saver(max_to_keep=50)
-summaryWriter = tf.summary.FileWriter("summary_{0}/{1}".format(opt.group,opt.model))
+summaryWriter = tf.summary.FileWriter("summary_{0}/{1}".format(0,opt.model))
 
 print(util.toYellow("======= TRAINING START ======="))
 timeStart = time.time()
@@ -120,7 +120,7 @@ with tf.Session(config=tfConfig) as sess:
 				summaryWriter.add_summary(sess.run(summaryImage,feed_dict=batch),i+1)
 			if (i+1)%10000==0:
 				util.saveModel(opt,sess,saver,i+1)
-				print(util.toGreen("model saved: {0}/{1}, it.{2}".format(opt.group,opt.model,i+1)))
+				print(util.toGreen("model saved: {0}/{1}, it.{2}".format(0,opt.model,i+1)))
 		dataloader.thread.join()
 
 print(util.toYellow("======= TRAINING DONE ======="))
