@@ -21,7 +21,6 @@ This file includes:
 ### Running the code  
 There are 4 scripts prepared:
 - Pretraining stage: `scripts/pretrain.sh`:
-    with flags:
       --model - define the name for the model to be saved
       --lr - you can adjust the learning rate
       --toIt - define the number of iterations 
